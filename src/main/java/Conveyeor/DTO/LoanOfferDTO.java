@@ -1,7 +1,14 @@
 package Conveyeor.DTO;
 
+import lombok.*;
+
 import java.math.BigDecimal;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class LoanOfferDTO {
 
     private Long applicationId;
