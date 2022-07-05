@@ -1,8 +1,15 @@
 package Conveyeor.DTO;
 
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class PaymentScheduleElement {
 
     private Integer number;

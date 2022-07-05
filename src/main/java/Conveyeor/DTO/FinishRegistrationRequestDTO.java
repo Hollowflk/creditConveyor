@@ -12,7 +12,7 @@ public class FinishRegistrationRequestDTO {
 
     private LocalDate passportIssueDate;
 
-    private String passportIssueBrach;
+    private String passportIssueBranch;
 
     private EmploymentDTO employment;
 

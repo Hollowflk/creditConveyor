@@ -19,13 +19,13 @@ import java.util.List;
 @Service
 public class LoanServiceOffers {
 
-    private static final BigDecimal INSURANCE = BigDecimal.valueOf(100000);
+    public static final BigDecimal INSURANCE = BigDecimal.valueOf(100000);
     private static Long APPLICATION_ID = 0l;
-    private final CreditService creditService;
 
     @Value("${baseRate}")
     private BigDecimal baseRate;
 
+    private final CreditService creditService;
 
     public List<LoanOfferDTO> createLoanOffersList(LoanApplicationRequestDTO loanApplicationRequestDTO){
 
@@ -48,22 +48,26 @@ public class LoanServiceOffers {
         return loanOfferDTOList;
     }
 
-    private LoanOfferDTO createLoanOffer (LoanApplicationRequestDTO loanApplicationRequestDTO, boolean isInsuranceEnabled, boolean isSalaryClient){
+    private LoanOfferDTO createLoanOffer (LoanApplicationRequestDTO loanApplicationRequestDTO,
+                                          boolean isInsuranceEnabled, boolean isSalaryClient){
 
         log.info("Создание предложения");
 
         BigDecimal rate = baseRate;
+        BigDecimal totalAmount = (new BigDecimal(0));
 
         if(isInsuranceEnabled){
             rate = rate.subtract(new BigDecimal(3));
+            totalAmount = INSURANCE;
         }
 
         if (isSalaryClient){
             rate = rate.subtract(new BigDecimal(1));
         }
 
-        BigDecimal monthlyPayment = creditService.monthlyPayment(loanApplicationRequestDTO.getAmount(),loanApplicationRequestDTO.getTerm(), rate);
-        BigDecimal totalAmount = monthlyPayment.multiply(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm()));
+        BigDecimal monthlyPayment = creditService.monthlyPayment(loanApplicationRequestDTO.getAmount().add(totalAmount),
+                                                                loanApplicationRequestDTO.getTerm(), rate);
+        totalAmount = totalAmount.add(monthlyPayment.multiply(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm())));
 
         LoanOfferDTO loanOfferDTO = LoanOfferDTO.builder()
                 .applicationId(++APPLICATION_ID)
