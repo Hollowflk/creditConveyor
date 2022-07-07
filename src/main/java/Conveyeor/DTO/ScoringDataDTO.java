@@ -1,10 +1,13 @@
 package Conveyeor.DTO;
 
+import Conveyeor.Enums.Gender;
+import Conveyeor.Enums.MaritalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,7 +42,7 @@ public class ScoringDataDTO {
     private String middleName;
 
     @NotNull
-    private Enum gender;
+    private Gender gender;
 
     @NotNull
     private LocalDate birthdate;
@@ -59,12 +62,12 @@ public class ScoringDataDTO {
     private String passportIssueBranch;
 
     @NotNull
-    private Enum maritalStatus;
+    private MaritalStatus maritalStatus;
 
     @NotNull
     private Integer dependentAmount;
 
-    @NotNull
+    @Valid
     private EmploymentDTO employment;
 
     @NotNull

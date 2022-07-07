@@ -1,5 +1,7 @@
 package Conveyeor.DTO;
 
+import Conveyeor.Enums.PositionAtWork;
+import Conveyeor.Enums.WorkStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import java.math.BigDecimal;
 public class EmploymentDTO {
 
     @NotNull
-    private Enum employmentStatus;
+    private WorkStatus employmentStatus;
 
     @NotNull
     private String employerINN;
@@ -24,7 +26,7 @@ public class EmploymentDTO {
     private BigDecimal salary;
 
     @NotNull
-    private Enum position;
+    private PositionAtWork position;
 
     @NotNull
     private Integer workExperienceTotal;

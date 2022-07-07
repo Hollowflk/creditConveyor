@@ -25,8 +25,6 @@ public class ScoringService {
         Period period = Period.between(birthdate, currentTime);
         int age = period.getYears();
 
-        log.debug("Method getAge return age: {}", age);
-
         return age;
     }
 
@@ -43,7 +41,7 @@ public class ScoringService {
                 rate = rate.add(BigDecimal.valueOf(3));
             }
 
-            log.info("Рабочий статус " + scoringDataDTO.getEmployment().getEmploymentStatus());
+            log.info("Рабочий статус: " + scoringDataDTO.getEmployment().getEmploymentStatus());
 
             if (scoringDataDTO.getEmployment().getPosition().equals(PositionAtWork.MIDDLE_MANAGER)){
                 rate = rate.subtract(BigDecimal.valueOf(2));
@@ -51,7 +49,7 @@ public class ScoringService {
                 rate = rate.subtract(BigDecimal.valueOf(4));
             }
 
-            log.info("Позиция на работе " + scoringDataDTO.getEmployment().getPosition());
+            log.info("Позиция на работе: " + scoringDataDTO.getEmployment().getPosition());
 
             if (scoringDataDTO.getMaritalStatus().equals(MaritalStatus.MARRIED)){
                 rate = rate.subtract(BigDecimal.valueOf(3));
@@ -61,13 +59,13 @@ public class ScoringService {
                 rate = rate.add(BigDecimal.valueOf(1));
             }
 
-            log.info("Отношения " + scoringDataDTO.getMaritalStatus());
+            log.info("Отношения: " + scoringDataDTO.getMaritalStatus());
 
             if (scoringDataDTO.getDependentAmount() > 1){
                 rate = rate.add(BigDecimal.valueOf(1));
             }
 
-            log.info("Кол-во иждивенцев " + scoringDataDTO.getDependentAmount());
+            log.info("Кол-во иждивенцев: " + scoringDataDTO.getDependentAmount());
 
             int age = ageNow(scoringDataDTO.getBirthdate());
 
@@ -77,7 +75,15 @@ public class ScoringService {
                 rate = rate.subtract(BigDecimal.valueOf(3));
             }
 
-            log.info("Пол " + scoringDataDTO.getGender() + "Возраст " + age);
+            log.info("Пол : " + scoringDataDTO.getGender() + " Возраст: " + age);
+
+            if (scoringDataDTO.getIsInsuranceEnabled()){
+                rate = rate.subtract(BigDecimal.valueOf(3));
+            }
+
+            if (scoringDataDTO.getIsSalaryClient()){
+                rate = rate.subtract(BigDecimal.valueOf(1));
+            }
 
             return rate;
         }
@@ -88,7 +94,7 @@ public class ScoringService {
     private Boolean scoringValidate(ScoringDataDTO scoringDataDTO){
 
         if (scoringDataDTO.getEmployment().getEmploymentStatus().equals(WorkStatus.UNEMPLOYED)){
-            log.debug("Отказано ваш статус" + WorkStatus.UNEMPLOYED);
+            log.debug("Отказано ваш статус: " + WorkStatus.UNEMPLOYED);
             return false;
         }
 
