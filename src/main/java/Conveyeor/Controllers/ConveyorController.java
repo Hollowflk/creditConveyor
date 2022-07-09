@@ -31,7 +31,7 @@ public class ConveyorController {
 
     @PostMapping("/offers")
     @Operation(summary = "Создание кредитного предложения")
-    public List<LoanOfferDTO> calculationOfPossibleLoanConditions(@RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) {
+    public List<LoanOfferDTO> calculationOfPossibleLoanConditions(@Valid @RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) {
         return loanServiceOffers.createLoanOffersList(loanApplicationRequestDTO);
     }
 
